@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -29,10 +30,11 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        Log::debug("test");
         $item = new Contact;
         $item->name = $request->name;
-        $item->email = $request->email;
         $item->save();
+        Log::debug("test2");
         return response()->json([
             'message' => 'Created successfully',
             'data' => $item
@@ -61,7 +63,6 @@ class ContactController extends Controller
     {
         $item = Contact::where('id', $contact->id)->first();
         $item->name = $request->name;
-        $item->email = $request->email;
         $item->save();
         if ($item) {
             return response()->json([
